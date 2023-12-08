@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Facebook-like Post</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f2f5;
+      background-image: url('https://th.bing.com/th/id/R.9c161cf044930726ce9fbde51936e1f5?rik=icwT%2boctm0pfeA&riu=http%3a%2f%2fwallpapercave.com%2fwp%2ff2nbsPJ.jpg&ehk=bNmxpoiqJpCACCmgfNjo%2f%2f8bb58aPTZdw4PF4ZBp2Ns%3d&risl=&pid=ImgRaw&r=0');
+    }
+
+    #post-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    #post-input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+     resize: vertical;
+	}
+
+    #post-button {
+      background-color: #1877f2;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #post-button:hover {
+      background-color: #135e96;
+    }
+
+    #posts-section {
+      margin-top: 20px;
+    }
+
+    .post {
+      position: relative;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .post-options {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .delete-button,
+    .private-button {
+      background-color: #ccc;
+      color: #333;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+   h2 {
+   margin-left: 20px;
+      color: #FFFF;
+    }
+	h1{ 
+	color: #333;}
+
+    .delete-button:hover,
+    .private-button:hover {
+      background-color: #999;
+    }
+	#logo {
+      font-family: 'Arial', sans-serif;
+      font-size: 2em;
+      font-weight: bold;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      text-align: center;
+      border: 2px solid #333;
+      padding: 10px 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	  margin-left: 0px;
+	   border-radius: 10px;
+	  margin-right: 1000px;
+	  margin-top: 10px;
+    }
+	
+  </style>
+</head>
+<body>
+ <div id="logo">YOUR SPACE</div>
+  <div id="post-container">
+    <h1>Create a Post</h1>
+    <textarea id="post-input" placeholder="What's on your mind?"></textarea>
+    <button id="post-button" onclick="sharePost()">Share</button>
+  </div>
+
+  <div id="posts-section">
+    <h2>Shared Posts</h2>
+    <div id="posts-list"></div>
+  </div>
+
+  <script>
+    function sharePost() {
+      var postInput = document.getElementById('post-input').value;
+      if (postInput.trim() !== '') {
+        // Create a new post element
+        var postElement = document.createElement('div');
+        postElement.classList.add('post');
+        postElement.textContent = postInput;
+
+        // Create buttons for post options
+        var optionsDiv = document.createElement('div');
+        optionsDiv.classList.add('post-options');
+
+        var deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = function () {
+          // Remove the post when the delete button is clicked
+          postElement.remove();
+        };
+
+        var privateButton = document.createElement('button');
+        privateButton.classList.add('private-button');
+        privateButton.textContent = 'Private';
+        privateButton.onclick = function () {
+          // You can add code here to handle marking the post as private
+          alert('Marking post as private: ' + postInput);
+        };
+
+        optionsDiv.appendChild(deleteButton);
+        optionsDiv.appendChild(privateButton);
+
+        // Append the options and the post content to the post element
+        postElement.appendChild(optionsDiv);
+
+        // Append the post to the posts list
+        document.getElementById('posts-list').appendChild(postElement);
+
+        // Clear the input field
+        document.getElementById('post-input').value = '';
+
+        // Trigger vibration
+        vibrate();
+
+        alert('Post shared: ' + postInput);
+        // Here you can add code to save the post or perform other actions
+      } else {
+        alert('Please enter a post before sharing.');
+      }
+    }
+
+    function vibrate() {
+      // Check if the browser supports the Vibration API
+      if ("vibrate" in navigator) {
+        // Vibrate for 200 milliseconds
+        navigator.vibrate(200);
+      }
+    }
+  </script>
+
+</body>
+</html>
